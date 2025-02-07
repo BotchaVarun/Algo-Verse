@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A* Algorithm Visualization</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/A.css">
+</head>
+<body>
+    <nav class="navbar">
+        <ul class="slidebar">
+            <li onclick=hideSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 96 960 960" width="26"><path d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"/></svg></a></li>
+            <li> <h4 class="about"><a href="about.html">About</a></h4></li>
+            <li> <h4 class="help"><a href="#Help">Help</a></h4></li>
+            <li> <div class="algocode" ><h4>AlgoCode</h4></div></li>
+        </ul>
+        <div class="section1" onclick="window.location.href='index.html'" style="cursor: pointer;"><h4>ALGOVERSE</h4></div>
+        <div class="section2">
+           <li> <h4 class="about"><a href="about.html">About</a></h4></li>
+           <li> <h4 class="help"><a href="#Help">Help</a></h4></li>
+           <li  style="border:none;" > <div class="algocode" style="border:none;"><h4>AlgoCode</h4></div></li>
+           <li class="menu-button" onclick=showSidebar()><svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 96 960 960" width="26"><path d="M120 816v-60h720v60H120Zm0-210v-60h720v60H120Zm0-210v-60h720v60H120Z" fill="#fff" /></svg></li>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="graph">
+            <!-- Nodes and edges will be added here dynamically -->
+        </div>
+        <div class="info">
+            <h3>Closed List</h3>
+            <ul id="closed-list">
+                <!-- Closed list items will be added here dynamically -->
+            </ul>
+            <div>
+                <label for="source-node">Source Node:</label>
+                <input type="text" id="source-node" value="S">
+            </div>
+            <div>
+                <label for="goal-node">Goal Node:</label>
+                <input type="text" id="goal-node" value="J">
+            </div>
+            <button id="start-btn">Start</button>
+            <button id="path-btn">Find All Paths</button>
+        </div>
+    </div>
+    <script src="js/A.js"></script>
+    <script src="js/index2.js"></script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prim's MST Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+
+        #graph-container {
+            position: relative;
+            width: 90vw;
+            height: 80vh;
+            border: 2px solid #333;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .node {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: #3498db;
+            border-radius: 50%;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .node:hover {
+            transform: scale(1.1);
+        }
+
+        .edge {
+            position: absolute;
+            background-color: #333;
+            transform-origin: top left;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            z-index: 1;
+        }
+
+        .edge.comparing {
+            background-color: #f1c40f;
+        }
+
+        .edge.selected {
+            background-color: #e74c3c;
+            box-shadow: 0 0 8px rgba(231, 76, 60, 0.8);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 8px rgba(231, 76, 60, 0.8);
+            }
+            50% {
+                box-shadow: 0 0 12px rgba(231, 76, 60, 1);
+            }
+        }
+
+        .edge-label {
+            position: absolute;
+            background: white;
+            color: black;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        #controls {
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prim's Minimum Spanning Tree Visualization</h1>
+    <div id="graph-container"></div>
+    <div id="controls">
+        <button id="start-btn" title="Start the MST visualization">Start Visualization</button>
+        <button id="reset-btn" title="Reset the graph" disabled>Reset</button>
+    </div>
+
+    <script>
+        const graphContainer = document.getElementById('graph-container');
+        const startBtn = document.getElementById('start-btn');
+        const resetBtn = document.getElementById('reset-btn');
+
+        const nodes = [
+            { id: 1, x: 50, y: 50 },
+            { id: 2, x: 300, y: 80 },
+            { id: 3, x: 500, y: 50 },
+            { id: 4, x: 200, y: 350 },
+            { id: 5, x: 350, y: 250 },
+            { id: 6, x: 500, y: 380 },
+            { id: 7, x: 200, y: 200 },
+            { id: 8, x: 600, y: 200 }
+        ];
+
+        const edges = [
+            { from: 1, to: 2, weight: 4 },
+            { from: 1, to: 4, weight: 7 },
+            { from: 2, to: 3, weight: 3 },
+            { from: 2, to: 5, weight: 6 },
+            { from: 3, to: 5, weight: 5 },
+            { from: 4, to: 5, weight: 2 },
+            { from: 4, to: 6, weight: 8 },
+            { from: 5, to: 6, weight: 1 },
+            { from: 5, to: 7, weight: 4 },
+            { from: 7, to: 8, weight: 3 },
+            { from: 6, to: 8, weight: 5 }
+        ];
+
+        function createNode(node) {
+            const div = document.createElement('div');
+            div.className = 'node';
+            div.style.left = `${node.x}px`;
+            div.style.top = `${node.y}px`;
+            div.textContent = node.id;
+            div.dataset.id = node.id;
+            graphContainer.appendChild(div);
+        }
+
+        function createEdge(edge) {
+            const fromNode = nodes.find(n => n.id === edge.from);
+            const toNode = nodes.find(n => n.id === edge.to);
+
+            const x1 = fromNode.x + 20;
+            const y1 = fromNode.y + 20;
+            const x2 = toNode.x + 20;
+            const y2 = toNode.y + 20;
+
+            const length = Math.hypot(x2 - x1, y2 - y1);
+            const angle = Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
+
+            const edgeDiv = document.createElement('div');
+            edgeDiv.className = 'edge';
+            edgeDiv.style.width = `${length}px`;
+            edgeDiv.style.height = `2px`;
+            edgeDiv.style.left = `${x1}px`;
+            edgeDiv.style.top = `${y1}px`;
+            edgeDiv.style.transform = `rotate(${angle}deg)`;
+
+            const label = document.createElement('div');
+            label.className = 'edge-label';
+            label.textContent = edge.weight;
+            label.style.left = `${(x1 + x2) / 2}px`;
+            label.style.top = `${(y1 + y2) / 2}px`;
+
+            graphContainer.appendChild(edgeDiv);
+            graphContainer.appendChild(label);
+
+            edge.div = edgeDiv;
+        }
+
+        function resetGraph() {
+            graphContainer.innerHTML = '';
+            nodes.forEach(createNode);
+            edges.forEach(createEdge);
+        }
+
+        async function animateMST() {
+            const visited = new Set();
+            const mstEdges = [];
+            visited.add(1);
+
+            while (visited.size < nodes.length) {
+                let minEdge = null;
+
+                for (const edge of edges) {
+                    if (
+                        (visited.has(edge.from) && !visited.has(edge.to)) ||
+                        (visited.has(edge.to) && !visited.has(edge.from))
+                    ) {
+                        edge.div.classList.add('comparing');
+                        await new Promise(resolve => setTimeout(resolve, 500));
+                        edge.div.classList.remove('comparing');
+
+                       
+                        if (!minEdge || edge.weight < minEdge.weight) {
+                            minEdge = edge;
+                        }
+                    }
+                }
+
+                if (minEdge) {
+                    minEdge.div.classList.add('selected');
+                    mstEdges.push(minEdge);
+
+                    visited.add(minEdge.from);
+                    visited.add(minEdge.to);
+
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                }
+            }
+        }
+
+        startBtn.addEventListener('click', () => {
+            startBtn.disabled = true;
+            resetBtn.disabled = false;
+            animateMST();
+        });
+
+        resetBtn.addEventListener('click', () => {
+            startBtn.disabled = false;
+            resetBtn.disabled = true;
+            resetGraph();
+        });
+
+        resetGraph();
+    </script>
+</body>
+</html>

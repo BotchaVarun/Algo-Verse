@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dijkstra's Algorithm Animation</title>
+    <link >
+   
+    <link rel="stylesheet" href="diji.css">
+</head>
+<body>
+    <nav class="navbar">
+        <ul class="slidebar">
+            <li onclick=hideSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 96 960 960" width="26"><path d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"/></svg></a></li>
+            <li> <h4 class="about"><a href="about.html">About</a></h4></li>
+            <li> <h4 class="help"><a href="#Help">Help</a></h4></li>
+            <li> <div class="algocode" ><h4>AlgoCode</h4></div></li>
+        </ul>
+        <div class="section1" onclick="window.location.href='index.html'" style="cursor: pointer;"><h4>ALGOVERSE</h4></div>
+        <div class="section2">
+           <li> <h4 class="about"><a href="about.html">About</a></h4></li>
+           <li> <h4 class="help"><a href="#Help">Help</a></h4></li>
+           <li  style="border:none;" > <div class="algocode" style="border:none;"><h4>AlgoCode</h4></div></li>
+           <li class="menu-button" onclick=showSidebar()><svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 96 960 960" width="26"><path d="M120 816v-60h720v60H120Zm0-210v-60h720v60H120Zm0-210v-60h720v60H120Z" fill="#fff" /></svg></li>
+        </div>
+    </nav>
+<div class="container">
+    <div class="graph">
+        <div class="node" id="node0" style="top: 80px; left: 20px;">0</div>
+        <div class="node" id="node1" style="top: 150px; left: 100px;">1</div>
+        <div class="node" id="node2" style="top: 10px; left: 100px;">2</div>
+        <div class="node" id="node3" style="top: 80px; left: 180px;">3</div>
+        <div class="node" id="node4" style="top: 10px; left: 260px;">4</div>
+        <div class="node" id="node6" style="top: 80px; left: 350px;">6</div>
+        <div class="node" id="node5" style="top: 150px; left: 260px;">5</div>
+        <div class="edge" data-start="0" data-end="2" style="top: 60px; left: 40px; width: 70px;transform:rotate(137deg);width:75px;height:3px;border-radius:2px;"><span style="color:black;margin-top:15px;">6</span></div>
+        <div class="edge" data-start="0" data-end="1" style="top: 129px; left: 42px; height: 3px;border-radius:5px;width:76px;transform:rotate(220deg)"><span style="color:black;margin-top:-15px;">2</span></div>
+        <div class="edge" data-start="2" data-end="3" style="top: 58px; left: 121px; height: 3px;width:75px;transform:rotate(40deg);border-radius:3px;"><span style="color:black;margin-top:-15px;">8</span></div>
+        <div class="edge" data-start="1" data-end="3" style="top: 130px; left: 118px;height:3px; width: 76px;transform:rotate(140deg);border-radius:5px;"><span style="color:black;margin-top:-15px;">5</span></div>
+        <div class="edge" data-start="2" data-end="4" style="top: 60px; left: 200px; width: 73px;height:3px;transform:rotate(318deg);border-radius:5px;"><span style="color:black;margin-top:-15px;">10</span></div>
+        <div class="edge" data-start="4" data-end="6" style="top: 59px; left: 282px; height: 3px; width:82px;transform:rotate(40deg);border-radius:5px;"><span style="color:black;margin-top:-15px;">2</span></div>
+        <div class="edge" data-start="3" data-end="5" style="top: 130px; left: 200px; width: 75px;height:3px;transform:rotate(220deg);border-radius:5px;"><span style="color:black;margin-top:-15px;">15</span></div>
+
+        <div class="edge" data-start="5" data-end="6" style="top: 130px; left: 280px; height: 3px;width:82px;transform:rotate(140deg);border-radius:5px;"><span style="color:black;margin-top:-15px;">6</span></div>
+    </div>
+    <div class="info">
+              <div class="vertex-info"> </div>
+              <button id="startButton">Start Dijkstra's Algorithm</button>
+              <button id="resetButton" disabled>Reset</button>
+    </div>
+</div>
+    <script src="diji.js"></script>
+    <script src="js/index2.js"></script>
+</body>
+</html>

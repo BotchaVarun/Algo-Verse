@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knapsack Algorithm Visualization</title>
+    <link rel="stylesheet" href="knap.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Knapsack Algorithm using Dynamic Programming</h1>
+      <div class="matrix-container">
+        <div class="weights"><p>Weights:</p> </div>
+        <div class="values"><p>Values:</p></div>
+      </div>
+        <div id="knapsack-table"></div>
+        <button id="start-btn"onclick="startKnapsack()">Start Visualization</button>
+        <button id="pause-btn">Pause</button>
+        <button id="resume-btn">Resume</button>
+        <button id="reset-btn">Reset</button>
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="knapsack.js"></script>
+    <script>
+        window.onload = snap;
+    </script>
+    
+</body>
+</html>
